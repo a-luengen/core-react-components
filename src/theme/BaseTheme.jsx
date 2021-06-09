@@ -6,8 +6,8 @@ export const BaseThemeOptions = {
   palette: {
     primary: {
       light: '#e4f3ff',
-      main: '#b9e1ff',
-      dark: '#80c8ff',
+      main: '#26c6da',
+      dark: '#00838f',
     },
   }
 };
