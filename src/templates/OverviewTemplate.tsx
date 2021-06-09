@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     contentContainer: {
       display: 'flex',
-      height: '100%',
+      height: '90vh',
       margin: theme.spacing(1),
       alignItems: 'start',
       justifyContent: 'center',
