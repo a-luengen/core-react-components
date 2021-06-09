@@ -1,6 +1,6 @@
-import { ArticleData } from './ArticleData';
+import ArticleData from './ArticleData';
 
-export interface ReceiptData {
+export default interface ReceiptData {
   storeName: string;
   receiptId: string;
   date: string;
