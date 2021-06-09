@@ -5,7 +5,7 @@ import {
   GridRowParams
 } from '@material-ui/data-grid';
 
-import {ReceiptData} from '../data/ReceiptData';
+import ReceiptData from '../data/ReceiptData';
 
 export interface ReceiptDataProps {
   /**
@@ -13,7 +13,7 @@ export interface ReceiptDataProps {
    */
   data: Array<ReceiptData>;
 
-  isLoading: boolean;
+  isLoading?: boolean;
 
   onRowSelected?: (param: GridRowSelectedParams) => void;
 
