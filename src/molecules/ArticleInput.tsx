@@ -22,7 +22,7 @@ const INITIAL_ARTICLE_INPUT_STATE: ArticleData = {
 const reducer = (state: ArticleData, action: IAction) => {
     if (action.type === 'reset')
         return INITIAL_ARTICLE_INPUT_STATE;
-        
+
     const result: ArticleData = {...state};
     if (action.value)
         result[action.type] = action.value;
@@ -39,6 +39,7 @@ const ArticleInput: FC<ArticleInputProps> = ({
             INITIAL_ARTICLE_INPUT_STATE, 
             () => INITIAL_ARTICLE_INPUT_STATE
         );
+    const [autoCompleteVals, setAutoCompleteVals] = React.useState(articleNames);
     let btnRef: React.RefObject<HTMLInputElement> = React.useRef(null);
   
     const handleOnAddArticle = () => {
@@ -65,15 +66,22 @@ const ArticleInput: FC<ArticleInputProps> = ({
           style={{width: '50%'}}
           freeSolo
           id="auto-complete-article-name"
-          options={articleNames || []}
+          options={autoCompleteVals || []}
           value={state.name}
+          onInputChange={(e, value) => { 
+              console.log("InputChange Name", e, value);
+              dispatch({type: 'name', value})
+              if(articleNames)
+                setAutoCompleteVals(
+                    articleNames.filter(v => v.startsWith(value))
+                );
+          }}
           renderInput={(params) => (
             <TextField 
               inputRef={btnRef}
               style={{width: '100%'}}
               label="Article Name"
-              margin="dense" 
-              onChange={(e) => dispatch({type: 'name', value: e.target.value})}
+              margin="dense"
               variant="outlined" 
               {...params} 
             />

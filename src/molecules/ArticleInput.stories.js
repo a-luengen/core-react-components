@@ -16,5 +16,17 @@ const Template = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-    onAddArticles: action('onAddArticle')
+    onAddArticles: action('onAddArticles')
 };
+
+export const WithAutoComplete = Template.bind({});
+WithAutoComplete.args = {
+    onAddArticles: action('onAddArticles'),
+    articleNames: [
+        "Bio Banane",
+        "Apfel Pkg. 6 Stk.",
+        "Speisequark 40%",
+        "Sellerie",
+        "Packing Bio Karotten"
+    ],
+}
