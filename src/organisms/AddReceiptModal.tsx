@@ -3,6 +3,7 @@ import { ReceiptData } from '../data';
 import { Backdrop, Fade, makeStyles, Theme, Modal, Paper, createStyles, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import CustomButton from '../atoms/CustomButton';
+import ArticleInput from '../molecules/ArticleInput';
 
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -19,64 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export interface ArticleInputProps {
-  articleNames: Array<String>,
-}
 
-const ArticleInputComponent: React.FC<ArticleInputProps> = ({articleNames, ...props}) => {
-  const [name, setName] = React.useState("");
-  const [price, setPrice] = React.useState(0.0);
-  const [amount, setAmount] = React.useState(1);
-  
-  return (
-    <div style={{
-      display: 'flex',
-      flex: 1, 
-      flexDirection: 'row', 
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderStyle: 'solid', 
-      borderWidth: 1, 
-      borderColor: 'black'
-    }}>
-      <Autocomplete 
-        style={{width: '50%'}}
-        freeSolo
-        id="auto-complete-article-name"
-        options={articleNames}
-        renderInput={(params) => (
-          <TextField 
-            style={{width: '100%'}}
-            label="Article Name"
-            defaultValue={name}
-            margin="dense" 
-            onChange={(e) => setName(e.target.value)}
-            variant="outlined" 
-            {...params} 
-          />
-        )}
-      />
-      <TextField 
-        style={{width: 120}} 
-        defaultValue={price} 
-        label="Price" 
-        margin="dense" 
-        variant="outlined" 
-        type="number"
-        onChange={(e) => setPrice(parseFloat(e.target.value))}
-      />
-      <TextField 
-        style={{width: 120}} 
-        defaultValue={amount} 
-        label="Amount" 
-        margin="dense" 
-        variant="outlined" 
-        type="number"
-        onChange={(e) => setAmount(parseInt(e.target.value))}
-      />
-    </div>
-  );
-}
 
 export interface AddReceiptModalProps {
   open: boolean,
@@ -91,12 +35,11 @@ const AddReceiptModal: React.FC<AddReceiptModalProps> = ({
   onAddReceipt,
   onHandleClose, 
   storeNames = [], 
-  articleNames = [],
-  ...props
+  articleNames = []
 }) => {
   const classes = useStyles();
 
-  const [receiptData, setArticles] = React.useState<ReceiptData>({
+  const [receiptData, setReceiptData] = React.useState<ReceiptData>({
     storeName: "Store Name",
     receiptId: "",
     date: Date.now().toLocaleString(),
@@ -141,7 +84,19 @@ const AddReceiptModal: React.FC<AddReceiptModalProps> = ({
               shrink: true
             }}
           />
-          <ArticleInputComponent articleNames={articleNames} />
+          {receiptData.articleList.map((article) => {
+            return (
+              <div key={article.name}>
+                {article.name}, {article.price}, {article.amount}
+              </div>
+            );
+          })}
+          <ArticleInput articleNames={articleNames} onAddArticle={(article) => {
+            receiptData.articleList.push(article);
+            setReceiptData({
+              ...receiptData
+            })
+          }}/>
           <CustomButton title="Add" onClick={() => onAddReceipt(receiptData)}/>
         </Paper>
       </Fade>
