@@ -69,7 +69,6 @@ const ArticleInput: FC<ArticleInputProps> = ({
           options={autoCompleteVals || []}
           value={state.name}
           onInputChange={(e, value) => { 
-              console.log("InputChange Name", e, value);
               dispatch({type: 'name', value})
               if(articleNames)
                 setAutoCompleteVals(
